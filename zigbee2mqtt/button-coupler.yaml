@@ -1,0 +1,159 @@
+blueprint:
+  name: Z2M - Push-button Coupler (on/off/dim)
+  description: |
+    This blueprint allows you to create an automation for a 4-button controller, where each button can control multiple lights. It is made for the ROBB SMARRT Wall Switch Zigbee 4V.
+
+input:
+  button_device:
+    name: Button Device
+    description: The device with 4 buttons.
+    selector:
+      device:
+        integration: push-button-coupler
+
+  lights_channel_1:
+    name: Lights - Channel 1
+    description: Lights controlled by button 1.
+    selector:
+      target:
+        entity:
+          domain: light
+
+  lights_channel_2:
+    name: Lights - Channel 2
+    description: Lights controlled by button 2.
+    selector:
+      target:
+        entity:
+          domain: light
+
+  lights_channel_3:
+    name: Lights - Channel 3
+    description: Lights controlled by button 3.
+    selector:
+      target:
+        entity:
+          domain: light
+
+  lights_channel_4:
+    name: Lights - Channel 4
+    description: Lights controlled by button 4.
+    selector:
+      target:
+        entity:
+          domain: light
+
+automation:
+  - id: smart_button_controller
+    alias: Smart Button Controller
+    description: Control lights with a 4-button controller
+    trigger:
+      platform: event
+      event_type: button_pressed
+      event_data:
+        device_id: !input button_device
+    action:
+      - choose:
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_1' }}"
+            sequence:
+              - service: light.toggle
+                target: !input lights_channel_1
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_2' }}"
+            sequence:
+              - service: light.toggle
+                target: !input lights_channel_2
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_3' }}"
+            sequence:
+              - service: light.toggle
+                target: !input lights_channel_3
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_4' }}"
+            sequence:
+              - service: light.toggle
+                target: !input lights_channel_4
+
+  - id: smart_button_long_press
+    alias: Smart Button Long Press
+    description: Dim lights with a long press on the 4-button controller
+    trigger:
+      platform: event
+      event_type: button_long_press
+      event_data:
+        device_id: !input button_device
+    action:
+      - choose:
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_1' }}"
+            sequence:
+              - service: light.turn_on
+                target: !input lights_channel_1
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input button_device
+                      state: "press_1"
+                  sequence:
+                    - service: light.turn_on
+                      target: !input lights_channel_1
+                      data:
+                        brightness_step_pct: 5
+                    - delay: 1
+              - service: light.turn_off
+                target: !input lights_channel_1
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_2' }}"
+            sequence:
+              - service: light.turn_on
+                target: !input lights_channel_2
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input button_device
+                      state: "press_2"
+                  sequence:
+                    - service: light.turn_on
+                      target: !input lights_channel_2
+                      data:
+                        brightness_step_pct: 5
+                    - delay: 1
+              - service: light.turn_off
+                target: !input lights_channel_2
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_3' }}"
+            sequence:
+              - service: light.turn_on
+                target: !input lights_channel_3
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input button_device
+                      state: "press_3"
+                  sequence:
+                    - service: light.turn_on
+                      target: !input lights_channel_3
+                      data:
+                        brightness_step_pct: 5
+                    - delay: 1
+              - service: light.turn_off
+                target: !input lights_channel_3
+          - conditions:
+              - "{{ trigger.event.data.button == 'press_4' }}"
+            sequence:
+              - service: light.turn_on
+                target: !input lights_channel_4
+              - repeat:
+                  while:
+                    - condition: state
+                      entity_id: !input button_device
+                      state: "press_4"
+                  sequence:
+                    - service: light.turn_on
+                      target: !input lights_channel_4
+                      data:
+                        brightness_step_pct: 5
+                    - delay: 1
+              - service: light.turn_off
+                target: !input lights_channel_4
