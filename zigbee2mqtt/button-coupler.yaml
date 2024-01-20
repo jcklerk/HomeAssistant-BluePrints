@@ -9,8 +9,9 @@ blueprint:
       name: Button Device
       description: The device with 4 buttons.
       selector:
-        device:
-          integration: push-button-coupler
+        entity:
+          domain: sensor
+          multiple: false
 
     lights_channel_1:
       name: Lights - Channel 1
