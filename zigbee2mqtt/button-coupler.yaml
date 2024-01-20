@@ -1,47 +1,48 @@
 blueprint:
   name: Z2M - Push-button Coupler (on/off/dim)
-  description: |
-    This blueprint allows you to create an automation for a 4-button controller, where each button can control multiple lights. It is made for the ROBB SMARRT Wall Switch Zigbee 4V.
+  description: This blueprint allows you to create an automation for a 4-button controller, where each button can control multiple lights. It is made for the ROBB SMARRT Wall Switch Zigbee 4V.
+  domain: automation
+  source_url: https://github.com/jcklerk/HomeAssistant-BluePrints/blob/master/zigbee2mqtt/button-coupler.yaml
+  author: jcklerk
+  input:
+    button_device:
+      name: Button Device
+      description: The device with 4 buttons.
+      selector:
+        device:
+          integration: push-button-coupler
 
-input:
-  button_device:
-    name: Button Device
-    description: The device with 4 buttons.
-    selector:
-      device:
-        integration: push-button-coupler
+    lights_channel_1:
+      name: Lights - Channel 1
+      description: Lights controlled by button 1.
+      selector:
+        target:
+          entity:
+            domain: light
 
-  lights_channel_1:
-    name: Lights - Channel 1
-    description: Lights controlled by button 1.
-    selector:
-      target:
-        entity:
-          domain: light
+    lights_channel_2:
+      name: Lights - Channel 2
+      description: Lights controlled by button 2.
+      selector:
+        target:
+          entity:
+            domain: light
 
-  lights_channel_2:
-    name: Lights - Channel 2
-    description: Lights controlled by button 2.
-    selector:
-      target:
-        entity:
-          domain: light
+    lights_channel_3:
+      name: Lights - Channel 3
+      description: Lights controlled by button 3.
+      selector:
+        target:
+          entity:
+            domain: light
 
-  lights_channel_3:
-    name: Lights - Channel 3
-    description: Lights controlled by button 3.
-    selector:
-      target:
-        entity:
-          domain: light
-
-  lights_channel_4:
-    name: Lights - Channel 4
-    description: Lights controlled by button 4.
-    selector:
-      target:
-        entity:
-          domain: light
+    lights_channel_4:
+      name: Lights - Channel 4
+      description: Lights controlled by button 4.
+      selector:
+        target:
+          entity:
+            domain: light
 
 automation:
   - id: smart_button_controller
