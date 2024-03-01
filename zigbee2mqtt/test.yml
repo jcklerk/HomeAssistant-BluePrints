@@ -1,0 +1,551 @@
+# Created by bvhme Bo
+# https://community.home-assistant.io/t/zigbee2mqtt-enocean-ptm-215z-friends-of-hue-switch/429770/31
+
+blueprint:
+  name: Friends of Hue 2 wippen MQTT
+  domain: automation
+  description: Zigbee Green Power switches
+
+  input:
+    # Trigger settings
+    device:
+      name: Wippen
+      selector:
+        device:
+          filter:
+            - integration: mqtt
+              model: "Pushbutton transmitter module (PTM 215Z)"
+    device_name:
+      name: De plaintext naam die Zigbee2MQTT gebruikt
+      description: Precies wat hier boven ook staat
+      selector:
+        text:
+
+    # Left rocker
+    left_target_move:
+      name: "⬅️ Linker target MQTT move"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+              integration: mqtt
+    left_target_light:
+      name: "⬅️ Linker target light"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+    left_target_switch:
+      name: "⬅️ Linker target switch"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: switch
+
+    left_top_press:
+      name: "↖️ Links boven: indrukken"
+      default: []
+      selector:
+        action:
+    left_top_quick_release:
+      name: "↖️ Links boven: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    left_top_long_release:
+      name: "↖️ Links boven: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    left_bottom_press:
+      name: "↙️ Links onder: indrukken"
+      default: []
+      selector:
+        action:
+    left_bottom_quick_release:
+      name: "↙️ Links onder: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    left_bottom_long_release:
+      name: "↙️ Links onder: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    # Right rocker
+    right_target_move:
+      name: "⬅️ Rechter target MQTT move"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+              integration: mqtt
+    right_target_light:
+      name: "⬅️ Rechter target light"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+    right_target_switch:
+      name: "⬅️ Rechter target switch"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: switch
+
+    right_top_press:
+      name: "↗️ Rechts boven: indrukken"
+      default: []
+      selector:
+        action:
+    right_top_quick_release:
+      name: "↗️ Rechts boven: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    right_top_long_release:
+      name: "↗️ Rechts boven: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    right_bottom_press:
+      name: "↘️ Rechts onder: indrukken"
+      default: []
+      selector:
+        action:
+    right_bottom_quick_release:
+      name: "↘️ Rechts onder: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    right_bottom_long_release:
+      name: "↘️ Rechts onder: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    # Both rockers
+
+    both_also_triggers_individual_buttons:
+      name: "↔️ Beide knoppen doen ook de acties van de linker en rechter wip. Hier naast doen ze de actie voor beide."
+      default: false
+      selector:
+        boolean:
+
+    both_target_move:
+      name: "↔️ Beide target MQTT move"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+              integration: mqtt
+    both_target_light:
+      name: "↔️ Beide target light"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: light
+    both_target_switch:
+      name: "↔️ Beide target switch"
+      default: {}
+      selector:
+        target:
+          entity:
+            - domain: switch
+
+    both_top_press:
+      name: "⬆️ Beide boven: indrukken"
+      default: []
+      selector:
+        action:
+    both_top_quick_release:
+      name: "⬆️ Beide boven: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    both_top_long_release:
+      name: "⬆️ Beide boven: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    both_bottom_press:
+      name: "⬇️ Beide onder: indrukken"
+      default: []
+      selector:
+        action:
+    both_bottom_quick_release:
+      name: "⬇️ Beide onder: snel weer loslaten"
+      default: []
+      selector:
+        action:
+    both_bottom_long_release:
+      name: "⬇️ Beide onder: loslaten na ingedrukt te houden"
+      default: []
+      selector:
+        action:
+
+    # Trigger interpretation settings
+    quick_release_timeout:
+      name: Na hoe lang word het ingedrukt houden.
+      default: 500
+      selector:
+        number:
+          unit_of_measurement: Milliseconds
+          min: 1
+          max: 3000
+          step: 50
+          mode: slider
+
+    # Action preferences
+    move_speed:
+      name: Move speed
+      description: What speed should the actions use (when supported and included)
+      default: 100
+      selector:
+        number:
+          min: 1
+          max: 255
+          step: 5
+          mode: slider
+
+mode: parallel
+max: 40
+
+trigger_variables:
+  device_name: !input device_name
+
+trigger:
+  - platform: mqtt
+    # To get the elapsed we need to get all device messages, as it is not in the `/action` payload
+    topic: "{{ 'zigbee2mqtt/' ~ device_name}}"
+
+condition: "{{ trigger.payload_json['action'] != '' }}"
+
+variables:
+  # Utility: for in script variables
+  device: !input device
+  device_name: !input device_name
+  move_speed: !input move_speed
+
+  both_also_triggers_individual_buttons: !input both_also_triggers_individual_buttons
+
+  # Is this trigger less than the quick release time from the last one
+  quick_release_timeout: !input quick_release_timeout
+  trigger_elapsed: "{{ trigger.payload_json['elapsed'] }}"
+  quick: "{{ trigger_elapsed <= quick_release_timeout }}"
+
+  # What action is this
+  action_id: "{{ trigger.payload_json['action'] }}"
+  action_id_parts: "{{ action_id.split('_', 1) }}"
+  action_name: "{{ action_id_parts[0] }}"
+  press: "{{ action_name == 'press' }}"
+  release: "{{ action_name == 'release' }}"
+  quick_release: "{{ release and quick }}"
+  long_release: "{{ release and not quick }}"
+
+  # What button is this
+  button_id: "{{ action_id_parts[1] }}"
+  both: "{{ button_id in ['1_and_3','2_and_4'] }}"
+  left: "{{ button_id in [1,2]  }}"
+  right: "{{ button_id in [3,4]  }}"
+  top: "{{ button_id in [1,3,'1_and_3'] }}"
+  bottom: "{{ button_id in [2,4,'2_and_4'] }}"
+  also: "{{ both and both_also_triggers_individual_buttons }}"
+  button_x: "{{ 'top' if top else 'bottom' }}"
+  button_y: "{{ 'left' if left}}{{ 'right' if right }}{{ 'both' if both }}"
+  button: "{{ button_x ~ '_' ~ button_y }}"
+
+action:
+  # Emit an event for debugging or other automations to latch on to
+  - event: foh-mqtt
+    event_data:
+      device_name: "{{ device_name }}"
+      act: "{{ act }}"
+      button: "{{ button }}"
+      # trigger: "{{ trigger }}"
+
+  - parallel:
+      - if:
+          - condition: template
+            value_template: "{{ both }}"
+        then:
+          - variables:
+              target_move: !input both_target_move
+              target_move_list: >
+                {% set data = namespace(list=[]) %}
+                {% for key, value in target_move.items() %}
+                  {% if value is string %}
+                    {% set data.list = data.list + [value] %}
+                  {% else %}
+                    {% set data.list = data.list + value %}
+                  {% endif %}
+                {% endfor %}
+                {{ data.list }}
+              move: "{{ target_move != {} }}"
+              target_light: !input both_target_light
+              light: "{{ target_light != {} }}"
+              target_switch: !input both_target_switch
+              switch: "{{ target_switch != {} }}"
+
+          - parallel:
+              - if:
+                  - condition: template
+                    value_template: "{{ move }}"
+                then:
+                  - choose:
+                      - conditions: "{{ press }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move_onoff": {{ ''-'' if bottom }}{{ move_speed}} }'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+                      - conditions: "{{ long_release }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move": "stop"}'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+
+              - if:
+                  - condition: template
+                    value_template: "{{ light }}"
+                then:
+                  - choose:
+                      - conditions: "{{ light and press and top }}"
+                        sequence:
+                          - service: light.turn_on
+                            target: !input both_target_light
+                      - conditions: "{{ light and press and bottom }}"
+                        sequence:
+                          - service: light.turn_off
+                            target: !input both_target_light
+
+              - if:
+                  - condition: template
+                    value_template: "{{ switch }}"
+                then:
+                  - choose:
+                      - conditions: "{{ switch and press and top }}"
+                        sequence:
+                          - service: switch.turn_on
+                            target: !input both_target_switch
+                      - conditions: "{{ switch and press and bottom }}"
+                        sequence:
+                          - service: switch.turn_off
+                            target: !input both_target_switch
+
+              - choose:
+                  - conditions: "{{ top and press }}"
+                    sequence: !input both_top_press
+                  - conditions: "{{ top and press }}"
+                    sequence: !input both_top_press
+                  - conditions: "{{ top and quick_release }}"
+                    sequence: !input both_top_quick_release
+                  - conditions: "{{ top and long_release }}"
+                    sequence: !input both_top_long_release
+                  - conditions: "{{ bottom and press }}"
+                    sequence: !input both_bottom_press
+                  - conditions: "{{ bottom and quick_release }}"
+                    sequence: !input both_bottom_quick_release
+                  - conditions: "{{ bottom and long_release }}"
+                    sequence: !input both_bottom_long_release
+
+      - if:
+          - condition: template
+            value_template: "{{ left or also }}"
+        then:
+          - variables:
+              target_move: !input left_target_move
+              target_move_list: >
+                {% set data = namespace(list=[]) %}
+                {% for key, value in target_move.items() %}
+                  {% if value is string %}
+                    {% set data.list = data.list + [value] %}
+                  {% else %}
+                    {% set data.list = data.list + value %}
+                  {% endif %}
+                {% endfor %}
+                {{ data.list }}
+              move: "{{ target_move != {} }}"
+              target_light: !input left_target_light
+              light: "{{ target_light != {} }}"
+              target_switch: !input left_target_switch
+              switch: "{{ target_switch != {} }}"
+
+          - parallel:
+              - if:
+                  - condition: template
+                    value_template: "{{ move }}"
+                then:
+                  - choose:
+                      - conditions: "{{ press }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move_onoff": {{ ''-'' if bottom }}{{ move_speed}} }'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+                      - conditions: "{{ long_release }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move": "stop"}'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+
+              - if:
+                  - condition: template
+                    value_template: "{{ light }}"
+                then:
+                  - choose:
+                      - conditions: "{{ light and press and top }}"
+                        sequence:
+                          - service: light.turn_on
+                            target: !input left_target_light
+                      - conditions: "{{ light and press and bottom }}"
+                        sequence:
+                          - service: light.turn_off
+                            target: !input left_target_light
+
+              - if:
+                  - condition: template
+                    value_template: "{{ switch }}"
+                then:
+                  - choose:
+                      - conditions: "{{ switch and press and top }}"
+                        sequence:
+                          - service: switch.turn_on
+                            target: !input left_target_switch
+                      - conditions: "{{ switch and press and bottom }}"
+                        sequence:
+                          - service: switch.turn_off
+                            target: !input left_target_switch
+
+              - choose:
+                  - conditions: "{{ top and press }}"
+                    sequence: !input left_top_press
+                  - conditions: "{{ top and press }}"
+                    sequence: !input left_top_press
+                  - conditions: "{{ top and quick_release }}"
+                    sequence: !input left_top_quick_release
+                  - conditions: "{{ top and long_release }}"
+                    sequence: !input left_top_long_release
+                  - conditions: "{{ bottom and press }}"
+                    sequence: !input left_bottom_press
+                  - conditions: "{{ bottom and quick_release }}"
+                    sequence: !input left_bottom_quick_release
+                  - conditions: "{{ bottom and long_release }}"
+                    sequence: !input left_bottom_long_release
+
+      - if:
+          - condition: template
+            value_template: "{{ right or also }}"
+        then:
+          - variables:
+              target_move: !input right_target_move
+              target_move_list: >
+                {% set data = namespace(list=[]) %}
+                {% for key, value in target_move.items() %}
+                  {% if value is string %}
+                    {% set data.list = data.list + [value] %}
+                  {% else %}
+                    {% set data.list = data.list + value %}
+                  {% endif %}
+                {% endfor %}
+                {{ data.list }}
+              move: "{{ target_move != {} }}"
+              target_light: !input right_target_light
+              light: "{{ target_light != {} }}"
+              target_switch: !input right_target_switch
+              switch: "{{ target_switch != {} }}"
+
+          - parallel:
+              - if:
+                  - condition: template
+                    value_template: "{{ move }}"
+                then:
+                  - choose:
+                      - conditions: "{{ press }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move_onoff": {{ ''-'' if bottom }}{{ move_speed}} }'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+                      - conditions: "{{ long_release }}"
+                        sequence:
+                          - repeat:
+                              for_each: "{{ target_move_list }}"
+                              sequence:
+                                - service: mqtt.publish
+                                  data:
+                                    payload: '{"brightness_move": "stop"}'
+                                    topic: "zigbee2mqtt/{{ state_attr(repeat.item, 'friendly_name') }}/set"
+
+              - if:
+                  - condition: template
+                    value_template: "{{ light }}"
+                then:
+                  - choose:
+                      - conditions: "{{ light and press and top }}"
+                        sequence:
+                          - service: light.turn_on
+                            target: !input right_target_light
+                      - conditions: "{{ light and press and bottom }}"
+                        sequence:
+                          - service: light.turn_off
+                            target: !input right_target_light
+
+              - if:
+                  - condition: template
+                    value_template: "{{ switch }}"
+                then:
+                  - choose:
+                      - conditions: "{{ switch and press and top }}"
+                        sequence:
+                          - service: switch.turn_on
+                            target: !input right_target_switch
+                      - conditions: "{{ switch and press and bottom }}"
+                        sequence:
+                          - service: switch.turn_off
+                            target: !input right_target_switch
+
+              - choose:
+                  - conditions: "{{ top and press }}"
+                    sequence: !input right_top_press
+                  - conditions: "{{ top and press }}"
+                    sequence: !input right_top_press
+                  - conditions: "{{ top and quick_release }}"
+                    sequence: !input right_top_quick_release
+                  - conditions: "{{ top and long_release }}"
+                    sequence: !input right_top_long_release
+                  - conditions: "{{ bottom and press }}"
+                    sequence: !input right_bottom_press
+                  - conditions: "{{ bottom and quick_release }}"
+                    sequence: !input right_bottom_quick_release
+                  - conditions: "{{ bottom and long_release }}"
+                    sequence: !input right_bottom_long_release
