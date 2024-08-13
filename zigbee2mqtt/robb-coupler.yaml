@@ -1,8 +1,6 @@
 blueprint:
-  name: Controller - EnOcean PTM 215Z (Friends of Hue) switch
-  description:
-    Controller automation for executing press/hold/release after hold actions triggered by EnOcean PTM 215Z (Friends of Hue) switch.
-    Make sure that 'Elapsed' is enabled in the z2m advanced settings.
+  name: Controller - ROBB Coupler
+  description: Controller automation for controlling lights for the robb coupler (EnOcean PTM 215Z Friends of Hue switch)
   domain: automation
   input:
     controller:
