@@ -26,8 +26,6 @@ blueprint:
     lights_1:
       name: Lights K1
       description: Light(s) to control when using button K1 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -35,8 +33,6 @@ blueprint:
     switches_1:
       name: Switch K1
       description: Switch(es) to control when using button K1 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -44,8 +40,6 @@ blueprint:
     lights_3:
       name: Lights K3
       description: Light(s) to control when using button K1 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -53,8 +47,6 @@ blueprint:
     switches_3:
       name: Switch K3
       description: Switch(es) to control when using button K3 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -62,8 +54,6 @@ blueprint:
     lights_1_and_3:
       name: Lights K1 and K3
       description: Light(s) to control when using button K1 and K3 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -71,8 +61,6 @@ blueprint:
     switches_1_and_3:
       name: Switch K1 and K3
       description: Switch(es) to control when using button K1 and K3 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -80,8 +68,6 @@ blueprint:
     lights_2:
       name: Lights K2
       description: Light(s) to control when using button K2 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -89,8 +75,6 @@ blueprint:
     switches_2:
       name: Switch K2
       description: Switch(es) to control when using button K2 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -98,8 +82,6 @@ blueprint:
     lights_4:
       name: Lights K4
       description: Light(s) to control when using button K4 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -107,8 +89,6 @@ blueprint:
     switches_4:
       name: Switch K4
       description: Switch(es) to control when using button K4 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -116,8 +96,6 @@ blueprint:
     lights_2_and_4:
       name: Lights K2 and K4
       description: Light(s) to control when using button K2 and K4 (on/off/dim)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
@@ -125,8 +103,6 @@ blueprint:
     switches_2_and_4:
       name: Switch K2 and K4
       description: Switch(es) to control when using button K2 and K4 (on/off)
-      default:
-        entity_id: none
       selector:
         target:
           entity:
