@@ -29,48 +29,54 @@ blueprint:
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
     lights_3:
       name: Lights K3
       description: Light(s) to control when using default light actions
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
     lights_1_and_3:
       name: Lights K1 and K3
       description: Light(s) to control when using default light actions
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
     lights_2:
       name: Lights K2
       description: Light(s) to control when using default light actions
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
     lights_4:
       name: Lights K4
       description: Light(s) to control when using default light actions
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
     lights_2_and_4:
       name: Lights K2 and K4
       description: Light(s) to control when using default light actions
       default:
         entity_id: none
       selector:
-        entity:
-          domain: light
+        target:
+          entity:
+            domain: light
 
   source_url: https://github.com/jcklerk/HomeAssistant-BluePrints/blob/master/zigbee2mqtt/robb-coupler.yaml
 mode: restart
