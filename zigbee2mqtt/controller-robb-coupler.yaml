@@ -25,58 +25,112 @@ blueprint:
 
     lights_1:
       name: Lights K1
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K1 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_1:
+      name: Switch K1
+      description: Switch(es) to control when using button K1 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
     lights_3:
       name: Lights K3
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K1 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_3:
+      name: Switch K3
+      description: Switch(es) to control when using button K3 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
     lights_1_and_3:
       name: Lights K1 and K3
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K1 and K3 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_1_and_3:
+      name: Switch K1 and K3
+      description: Switch(es) to control when using button K1 and K3 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
     lights_2:
       name: Lights K2
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K2 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_2:
+      name: Switch K2
+      description: Switch(es) to control when using button K2 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
     lights_4:
       name: Lights K4
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K4 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_4:
+      name: Switch K4
+      description: Switch(es) to control when using button K4 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
     lights_2_and_4:
       name: Lights K2 and K4
-      description: Light(s) to control when using default light actions
+      description: Light(s) to control when using button K2 and K4 (on/off/dim)
       default:
         entity_id: none
       selector:
         target:
           entity:
             domain: light
+    switches_2_and_4:
+      name: Switch K2 and K4
+      description: Switch(es) to control when using button K2 and K4 (on/off)
+      default:
+        entity_id: none
+      selector:
+        target:
+          entity:
+            domain: switch
 
   source_url: https://github.com/jcklerk/HomeAssistant-BluePrints/blob/master/zigbee2mqtt/controller-robb-coupler.yaml
 mode: restart
@@ -111,6 +165,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_1
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_1
               - conditions: '{{ trigger.payload_json.action == "release_2" }}'
                 sequence:
                   - service: light.toggle
@@ -119,6 +179,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_2
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_2
               - conditions: '{{ trigger.payload_json.action == "release_3" }}'
                 sequence:
                   - service: light.toggle
@@ -127,6 +193,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_3
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_3
               - conditions: '{{ trigger.payload_json.action == "release_4" }}'
                 sequence:
                   - service: light.toggle
@@ -135,6 +207,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_4
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_4
               - conditions: '{{ trigger.payload_json.action == "release_1_and_3" }}'
                 sequence:
                   - service: light.toggle
@@ -143,6 +221,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_1_and_3
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_1_and_3
               - conditions: '{{ trigger.payload_json.action == "release_2_and_4" }}'
                 sequence:
                   - service: light.toggle
@@ -151,6 +235,12 @@ action:
                     target:
                       entity_id:
                         - !input lights_2_and_4
+                  - service: switch.toggle
+                    metadata: {}
+                    data: {}
+                    target:
+                      entity_id:
+                        - !input switches_2_and_4
       - conditions: '{{ "press_" | string in trigger.payload_json.action }}'
         sequence:
           - delay:
