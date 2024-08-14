@@ -30,6 +30,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_1:
       name: Switch K1
       description: Switch(es) to control when using button K1 (on/off)
@@ -45,6 +46,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_3:
       name: Switch K3
       description: Switch(es) to control when using button K3 (on/off)
@@ -60,6 +62,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_1_and_3:
       name: Switch K1 and K3
       description: Switch(es) to control when using button K1 and K3 (on/off)
@@ -75,6 +78,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_2:
       name: Switch K2
       description: Switch(es) to control when using button K2 (on/off)
@@ -90,6 +94,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_4:
       name: Switch K4
       description: Switch(es) to control when using button K4 (on/off)
@@ -105,6 +110,7 @@ blueprint:
       selector:
         entity:
           domain: light
+          multiple: true
     switches_2_and_4:
       name: Switch K2 and K4
       description: Switch(es) to control when using button K2 and K4 (on/off)
