@@ -1,6 +1,6 @@
 blueprint:
   name: Controller - ROBB Coupler
-  description: Controller automation for controlling lights for the robb coupler (EnOcean PTM 215Z Friends of Hue switch)
+  description: "Controller automation for controlling lights for the robb coupler (EnOcean PTM 215Z Friends of Hue switch) \n *Make sure that 'Elapsed' is enabled in the z2m advanced settings.* \n This Blueprint is based on: vandalon/z2m EnOcean PTM 215Z (Friends of Hue) switch"
   domain: automation
   input:
     controller:
@@ -22,8 +22,7 @@ blueprint:
           unit_of_measurement: milliseconds
           mode: box
           step: 10.0
-
-    lights_1:
+    lights_3:
       name: Lights K1
       description: Light(s) to control when using button K1 (on/off/dim)
       default: []
@@ -31,7 +30,7 @@ blueprint:
         entity:
           domain: light
           multiple: true
-    switches_1:
+    switches_3:
       name: Switch K1
       description: Switch(es) to control when using button K1 (on/off)
       default: []
@@ -39,15 +38,15 @@ blueprint:
         entity:
           domain: switch
           multiple: true
-    lights_3:
+    lights_1:
       name: Lights K3
-      description: Light(s) to control when using button K1 (on/off/dim)
+      description: Light(s) to control when using button K3 (on/off/dim)
       default: []
       selector:
         entity:
           domain: light
           multiple: true
-    switches_3:
+    switches_1:
       name: Switch K3
       description: Switch(es) to control when using button K3 (on/off)
       default: []
@@ -71,7 +70,7 @@ blueprint:
         entity:
           domain: switch
           multiple: true
-    lights_2:
+    lights_4:
       name: Lights K2
       description: Light(s) to control when using button K2 (on/off/dim)
       default: []
@@ -79,7 +78,7 @@ blueprint:
         entity:
           domain: light
           multiple: true
-    switches_2:
+    switches_4:
       name: Switch K2
       description: Switch(es) to control when using button K2 (on/off)
       default: []
@@ -87,7 +86,7 @@ blueprint:
         entity:
           domain: switch
           multiple: true
-    lights_4:
+    lights_2:
       name: Lights K4
       description: Light(s) to control when using button K4 (on/off/dim)
       default: []
@@ -95,7 +94,7 @@ blueprint:
         entity:
           domain: light
           multiple: true
-    switches_4:
+    switches_2:
       name: Switch K4
       description: Switch(es) to control when using button K4 (on/off)
       default: []
