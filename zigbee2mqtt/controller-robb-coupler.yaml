@@ -228,7 +228,7 @@ action:
                       light_input: !input lights_1
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 25
+                      count: 30
                       sequence:
                         - choose:
                             - conditions:
@@ -237,7 +237,7 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 25
+                                    brightness_step: 20
                                   target:
                                     entity_id: !input lights_1
                             - conditions:
@@ -246,18 +246,18 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -25
+                                    brightness_step: -20
                                   target:
                                     entity_id: !input lights_1
                         - delay:
-                            milliseconds: 500
+                            milliseconds: 300
               - conditions: '{{ trigger.payload_json.action == "press_2" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_2
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 25
+                      count: 30
                       sequence:
                         - choose:
                             - conditions:
@@ -266,7 +266,7 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 25
+                                    brightness_step: 20
                                   target:
                                     entity_id: !input lights_2
                             - conditions:
@@ -275,18 +275,18 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -25
+                                    brightness_step: -20
                                   target:
                                     entity_id: !input lights_2
                         - delay:
-                            milliseconds: 500
+                            milliseconds: 300
               - conditions: '{{ trigger.payload_json.action == "press_3" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_3
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 25
+                      count: 30
                       sequence:
                         - choose:
                             - conditions:
@@ -295,7 +295,7 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 25
+                                    brightness_step: 20
                                   target:
                                     entity_id: !input lights_3
                             - conditions:
@@ -304,18 +304,18 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -25
+                                    brightness_step: -20
                                   target:
                                     entity_id: !input lights_3
                         - delay:
-                            milliseconds: 500
+                            milliseconds: 300
               - conditions: '{{ trigger.payload_json.action == "press_4" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_4
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 25
+                      count: 30
                       sequence:
                         - choose:
                             - conditions:
@@ -324,7 +324,7 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 25
+                                    brightness_step: 20
                                   target:
                                     entity_id: !input lights_4
                             - conditions:
@@ -333,18 +333,18 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -25
+                                    brightness_step: -20
                                   target:
                                     entity_id: !input lights_4
                         - delay:
-                            milliseconds: 500
+                            milliseconds: 300
               - conditions: '{{ trigger.payload_json.action == "press_1_and_3" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_1_and_3
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 25
+                      count: 30
                       sequence:
                         - choose:
                             - conditions:
@@ -353,7 +353,7 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 25
+                                    brightness_step: 20
                                   target:
                                     entity_id: !input lights_1_and_3
                             - conditions:
@@ -362,11 +362,11 @@ action:
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -25
+                                    brightness_step: -20
                                   target:
                                     entity_id: !input lights_1_and_3
                         - delay:
-                            milliseconds: 500
+                            milliseconds: 300
               - conditions: '{{ trigger.payload_json.action == "press_2_and_4" }}'
                 sequence:
                   - variables:
