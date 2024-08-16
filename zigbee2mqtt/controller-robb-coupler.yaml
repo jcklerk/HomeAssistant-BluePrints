@@ -146,77 +146,131 @@ action:
           - choose:
               - conditions: '{{ trigger.payload_json.action == "release_1" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_1
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_1
+                  - variables:
+                      light_input: !input lights_1
+                      switch_input: !input switches_1
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
               - conditions: '{{ trigger.payload_json.action == "release_2" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_2
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_2
+                  - variables:
+                      light_input: !input lights_2
+                      switch_input: !input switches_2
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
               - conditions: '{{ trigger.payload_json.action == "release_3" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_3
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_3
+                  - variables:
+                      light_input: !input lights_3
+                      switch_input: !input switches_3
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
               - conditions: '{{ trigger.payload_json.action == "release_4" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_4
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_4
+                  - variables:
+                      light_input: !input lights_4
+                      switch_input: !input switches_4
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
               - conditions: '{{ trigger.payload_json.action == "release_1_and_3" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_1_and_3
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_1_and_3
+                  - variables:
+                      light_input: !input lights_1_and_3
+                      switch_input: !input switches_1_and_3
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
               - conditions: '{{ trigger.payload_json.action == "release_2_and_4" }}'
                 sequence:
-                  - service: light.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input lights_2_and_4
-                  - service: switch.toggle
-                    metadata: {}
-                    data: {}
-                    target:
-                      entity_id: !input switches_2_and_4
-      - conditions: '{{ "press_" | string in trigger.payload_json.action }}'
+                  - variables:
+                      light_input: !input lights_2_and_4
+                      switch_input: !input switches_2_and_4
+                  - choose:
+                      - conditions: "{{ (light_input | length > 0 and is_state(light_input[0], 'off')) or (switch_input | length > 0 and is_state(switch_input[0], 'off')) }}"
+                        sequence:
+                          - service: light.turn_on
+                            target:
+                              entity_id: "{{ light_input }}"
+                          - service: switch.turn_on
+                            target:
+                              entity_id: "{{ switch_input }}"
+                    default:
+                      - service: light.turn_off
+                        target:
+                          entity_id: "{{ light_input }}"
+                      - service: switch.turn_off
+                        target:
+                          entity_id: "{{ switch_input }}"
+      - conditions: '{{ "press_" in trigger.payload_json.action }}'
         sequence:
           - delay:
               milliseconds: !input "hold_delay"
@@ -227,145 +281,125 @@ action:
                       light_input: !input lights_1
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 30
+                      count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 20
+                                    brightness_step: 25
                                   target:
-                                    entity_id: !input lights_1
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -20
+                                    brightness_step: -25
                                   target:
-                                    entity_id: !input lights_1
+                                    entity_id: "{{ light_input }}"
                         - delay:
-                            milliseconds: 300
+                            milliseconds: 500
               - conditions: '{{ trigger.payload_json.action == "press_2" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_2
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 30
+                      count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 20
+                                    brightness_step: 25
                                   target:
-                                    entity_id: !input lights_2
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -20
+                                    brightness_step: -25
                                   target:
-                                    entity_id: !input lights_2
+                                    entity_id: "{{ light_input }}"
                         - delay:
-                            milliseconds: 300
+                            milliseconds: 500
               - conditions: '{{ trigger.payload_json.action == "press_3" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_3
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 30
+                      count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 20
+                                    brightness_step: 25
                                   target:
-                                    entity_id: !input lights_3
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -20
+                                    brightness_step: -25
                                   target:
-                                    entity_id: !input lights_3
+                                    entity_id: "{{ light_input }}"
                         - delay:
-                            milliseconds: 300
+                            milliseconds: 500
               - conditions: '{{ trigger.payload_json.action == "press_4" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_4
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 30
+                      count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 20
+                                    brightness_step: 25
                                   target:
-                                    entity_id: !input lights_4
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -20
+                                    brightness_step: -25
                                   target:
-                                    entity_id: !input lights_4
+                                    entity_id: "{{ light_input }}"
                         - delay:
-                            milliseconds: 300
+                            milliseconds: 500
               - conditions: '{{ trigger.payload_json.action == "press_1_and_3" }}'
                 sequence:
                   - variables:
                       light_input: !input lights_1_and_3
                       current_brightness: "{{ state_attr(light_input[0], 'brightness') | int(default=0) }}"
                   - repeat:
-                      count: 30
+                      count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: 20
+                                    brightness_step: 25
                                   target:
-                                    entity_id: !input lights_1_and_3
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
-                                    brightness_step: -20
+                                    brightness_step: -25
                                   target:
-                                    entity_id: !input lights_1_and_3
+                                    entity_id: "{{ light_input }}"
                         - delay:
-                            milliseconds: 300
+                            milliseconds: 500
               - conditions: '{{ trigger.payload_json.action == "press_2_and_4" }}'
                 sequence:
                   - variables:
@@ -375,23 +409,19 @@ action:
                       count: 25
                       sequence:
                         - choose:
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness <= 230 }}"
+                            - conditions: "{{ current_brightness <= 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
                                     brightness_step: 25
                                   target:
-                                    entity_id: !input lights_2_and_4
-                            - conditions:
-                                - condition: template
-                                  value_template: "{{ current_brightness > 230 }}"
+                                    entity_id: "{{ light_input }}"
+                            - conditions: "{{ current_brightness > 230 }}"
                               sequence:
                                 - service: light.turn_on
                                   data:
                                     brightness_step: -25
                                   target:
-                                    entity_id: !input lights_2_and_4
+                                    entity_id: "{{ light_input }}"
                         - delay:
                             milliseconds: 500
